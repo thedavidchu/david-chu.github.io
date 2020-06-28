@@ -3,27 +3,16 @@
 /* General styling */
 
 title {
-	color: limegreen;
-}
-
-@keyframes gradient {
-	0% {
-		background-position: 0% 50%;
-	}
-	50% {
-		background-position: 100% 50%;
-	}
-	100% {
-		background-position: 0% 50%;
-	}
+	color: tomato;
 }
 
 body {
-	background-color: lightgrey;
+	background-color: white;
 }
 
 h1 {
 	color: black;
+	background-color: lightgrey;
 	text-align: center;
 	font-size: 48;
 }
@@ -37,24 +26,49 @@ h3 {
 }
 
 p {
-	color: blue;
+	font-size: 12;
 }
 
+hr {
+	height: 3px;
+	width: 80%;
+	background-color: black;
+	border: none;
+}
 
-/* Navigation */
+/* ========== Navigation ========== */
 .top_nav_external {
+	background-color: black;
 	position: relative;
 	float: left;
-}
-
-.top_nav_internal {
-	position: relative;
-	float: right;
-	color: limegreen;
 	text-align: center;
 	padding: 12px 25px;
 	text-decoration: none;
 	font-size: 24px;
+}
+
+.top_nav_external a:hover {
+	background: lightgrey;
+}
+
+.top_nav_internal {
+	background-color: black;
+	position: relative;
+	float: right;
+	color: white;
+	text-align: center;
+	padding: 12px 25px;
+
+	font-size: 24px;
+}
+
+.top_nav_internal a {
+	color: white;
+	text-decoration: none;
+}
+
+.top_nav_internal a:hover {
+	background-color: lightgrey;
 }
 
 /* Name */

@@ -13,7 +13,7 @@ Main page HTML layout
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
         -->
     <link rel="stylesheet" href="static/stylesheet.css">
-    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon_three.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="static/favicon_three.png">
     
     <title>David Chu - Main page</title>
 </head>
@@ -27,24 +27,26 @@ Main page HTML layout
         -->
         <div class="top_nav_external" id="top_nav_external">
             <a href="https://www.linkedin.com/in/david-chu-51ba7017b/" target="_blank">
-                <img src="images/LinkedIn_logo.PNG" alt="LinkedIn" style="width:35px;height:35px;">
+                <img src="static/LinkedIn_logo.PNG" alt="LinkedIn" style="width:35px;height:35px;">
             </a>
             <a href="https://github.com/thedavidchu" target="_blank"> 
-                <img src="images/Github_logo.PNG" alt="Github" style="width:35px;height:35px;border:solid;border-radius:50%;">
+                <img src="static/Github_logo.PNG" alt="Github" style="width:35px;height:35px">
             </a>
         </div>
 
         <div class="top_nav_internal" id="top_nav_internal">
-            <a href="#contact" style="color: #f2f2f2;">Contact</a>
-            <a href="#portfolio" style="color: #f2f2f2;">Portfolio</a>
-            <a href="#about" style="color: #f2f2f2;">About</a>
-            <a href="#intro" style="color: #f2f2f2;">Intro</a>
+            <a href="#intro">Intro</a>
+            <a href="#about">About</a>
+            <a href="#portfolio">Portfolio</a>
+            <a href="#contact">Contact</a>
         </div>
     </div>
 
     <div class="intro" id="intro">
+        <br>
         <h1>David Chu</h1>
         <p>Welcome to my website! New updates coming soon...</p>
+        <button onclick="blink_title();">Feeling adventurous!</button>
         <hr>
     </div>
 
@@ -59,18 +61,25 @@ Main page HTML layout
 
         <a href="docs/Resume 2020May26.pdf">Download my CV here!</a>
 
+
         <hr>
     </div>
 
     <div class="portfolio" id="portfolio">
         <h2>Portfolio</h2>
-        blah
+        <p>We are bringing some spicy projects soon!</p>
     </div>
 
     <div class="contact" id="contact">
         <h2>My Contact</h2>
+        <ul>
+            <li>Chat? Email me. (thedavid.chu@mail.utoronto.ca)</li>
+            <li>Looking for some code to copy? Visit my github!!!</li>
+        </ul>
 
     </div>
 
 </body>
 </html>
+
+<script src="blink_title.js"></script>
