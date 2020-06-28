@@ -7,11 +7,12 @@ title {
 }
 
 body {
-	background-color: darkgreen;
+	background-color: lightgrey;
 }
 
 h1 {
-	color: red;
+	color: black;
+	text-align: center;
 	font-size: 48;
 }
 
