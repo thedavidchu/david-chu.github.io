@@ -1,74 +1,121 @@
 /* stylesheet.css */
 
-/* General styling */
+/* ================================================== General styling ================================================== */
 
 body {
-	background-color: white;
+    /* Background */
+    background-color: #2f2f2f;
 
+
+    /* Text */
+    color: white;
+    
 }
 
 h1 {
-	color: black;
-	background-color: lightgrey;
-	text-align: center;
-	font-size: 48;
+    color: #f0f0f0;
+    text-align: center;
+    font-size: 72px;
 }
 
 h2 {
-	font-size: 36;
+    text-align: center;
+    font-size: 36px;
 }
 
 h3 {
-	font-size: 24;
+    font-size: 24px;
 }
 
 p {
-	font-size: 12;
+    font-size: 12;
 }
 
 hr {
-	height: 3px;
-	width: 80%;
-	background-color: black;
-	border: none;
+    height: 3px;
+    width: 80%;
+    background-color: black;
+    border: none;
 }
 
-/* ========== Navigation ========== */
-.top_nav_external {
-	background-color: black;
-	position: relative;
-	float: left;
-	text-align: center;
-	padding: 12px 25px;
-	text-decoration: none;
-	font-size: 24px;
+a {
+    text-decoration: none;
+    color: black;
 }
 
-.top_nav_external a:hover {
-	background: lightgrey;
+.action {
+
 }
 
-.top_nav_internal {
-	background-color: black;
-	position: relative;
-	float: right;
-	color: white;
-	text-align: center;
-	padding: 12px 25px;
+.content {
+    margin-left: 150px;
+    margin-right: 150px;
+}
 
-	font-size: 24px;
+button {
+    background-color: darkgrey;
+    border: none;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+}
+
+/* ================================================== Navigation ================================================== */
+.top_nav_bar {
+    background-color: darkgrey;
+    overflow: hidden;
+    height: 65px;
+    margin-left: 75px;
+    margin-right: 75px;
 }
 
 .top_nav_internal a {
-	color: white;
-	text-decoration: none;
+    background-color: inherit;
+    height: inherit;
+
+    position: relative;
+    float: left;
+
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    font-size: 24px;
+    
+    padding: 20px 10px;
 }
 
-.top_nav_internal a:hover {
-	background-color: lightgrey;
+.top_nav_external a {
+    background-color: inherit;
+    height: 65px;
+    width: 50px;
+
+    padding: 10px 20px;
+
+    position: relative;
+    float: right;
 }
 
-/* Name */
 
 
-/* About */
+.top_nav_bar a:hover {
+    background-color: lightgrey;
+    color: black;
+}
+
+/* ================================================== Name ================================================== */
+
+
+/* ================================================== About ================================================== */
+
+/* ================================================== Contact ==================================================*/
+
+.contact {
+    background-color: darkgrey;
+    margin-left: 75px;
+    margin-right: 75px;
+
+}
+
+.contact p {
+    text-align: right;
+}

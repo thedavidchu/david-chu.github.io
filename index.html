@@ -5,7 +5,7 @@ Main page HTML layout
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<!-- Not sure that this is, but I copied it from Matt Ing's -->
+    <!-- Not sure that this is, but I copied it from Matt Ing's -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -25,61 +25,83 @@ Main page HTML layout
             1. Further websites (Github, LinkedIn)
             2. Other pages (About me, Projects, Contact)
         -->
+        <!-- Tab links -->
         <div class="top_nav_external" id="top_nav_external">
             <a href="https://www.linkedin.com/in/david-chu-51ba7017b/" target="_blank">
-                <img src="static/LinkedIn_logo.PNG" alt="LinkedIn" style="width:35px;height:35px;">
+                <img src="static/LinkedIn_logo.PNG" alt="LinkedIn">
             </a>
-            <a href="https://github.com/thedavidchu" target="_blank"> 
-                <img src="static/Github_logo.PNG" alt="Github" style="width:35px;height:35px">
+            <a href="https://github.com/thedavidchu/" target="_blank"> 
+                <img src="static/Github_logo.PNG" alt="Github">
             </a>
         </div>
 
         <div class="top_nav_internal" id="top_nav_internal">
-            <a href="#intro">Intro</a>
-            <a href="#about">About</a>
-            <a href="#portfolio">Portfolio</a>
-            <a href="#contact">Contact</a>
+            <a href="#top_nav_bar" onclick="change_title('Home');">Home</a>
+            <a href="#intro" onclick="change_title('Intro');">Intro</a>
+            <a href="#about" onclick="change_title('About');">About</a>
+            <a href="#portfolio" onclick="change_title('Portfolio');">Portfolio</a>
+            <a href="#contact" onclick="change_title('Contact');">Contact</a>
         </div>
     </div>
 
-    <div class="intro" id="intro">
-        <br>
-        <h1>David Chu</h1>
-        <p>Welcome to my website! New updates coming soon...</p>
-        <button onclick="blink_title();">Feeling adventurous!</button>
-        <hr>
-    </div>
+    <div class="content">
+        <div class="intro" id="intro">
+            <br>
+            <h1>David Chu</h1>
+            <p>Welcome to my website! New updates coming soon...</p>
+            <button onclick="change_title();">Feeling adventurous!</button>
+            <hr>
+        </div>
 
-    <div class="about" id="about">
-        <h2>About</h2>
+        <div class="about" id="about">
+            <h2>About</h2>
 
-        <h3>Education</h3>
-        <ul>
-            <li>University of Toronto, Engineering Science, 2022</li>
-            <li>North Toronto Collegiate Institute, 2018</li>
-        </ul>
+            <h3>Education</h3>
+            <ul>
+                <li>University of Toronto, Engineering Science, 2022</li>
+                <li>North Toronto Collegiate Institute, 2018</li>
+            </ul>
 
-        <a href="docs/Resume 2020May26.pdf">Download my CV here!</a>
+            <a href="docs/Resume 2020May26.pdf">Download my CV here!</a>
 
 
-        <hr>
-    </div>
+            <hr>
+        </div>
 
-    <div class="portfolio" id="portfolio">
-        <h2>Portfolio</h2>
-        <p>We are bringing some spicy projects soon!</p>
+        <div class="portfolio" id="portfolio">
+            <h2>Portfolio</h2>
+            <p>We are bringing some spicy projects soon!</p>
+        </div>
+
+
     </div>
 
     <div class="contact" id="contact">
         <h2>My Contact</h2>
-        <ul>
-            <li>Chat? Email me. (thedavid.chu@mail.utoronto.ca)</li>
-            <li>Looking for some code to copy? Visit my github!!!</li>
-        </ul>
-
+        <p>thedavid.chu@mail.utoronto.ca</p>
+        <p>https://github.com/thedavidchu/</p>
+        <p>https://www.linkedin.com/in/david-chu-51ba7017b/</p>
     </div>
+
+    <button id="ttt_0" value="0" onclick="ttt_main_buttons('ttt_0')">0</button>
+    <button id="ttt_1" value="0" onclick="ttt_main_buttons('ttt_1')">0</button>
+    <button id="ttt_2" value="0" onclick="ttt_main_buttons('ttt_2')">0</button>
+    <br>
+    <button id="ttt_3" value="0" onclick="ttt_main_buttons('ttt_3')">0</button>
+    <button id="ttt_4" value="0" onclick="ttt_main_buttons('ttt_4')">0</button>
+    <button id="ttt_5" value="0" onclick="ttt_main_buttons('ttt_5')">0</button>
+    <br>
+    <button id="ttt_6" value="0" onclick="ttt_main_buttons('ttt_6')">0</button>
+    <button id="ttt_7" value="0" onclick="ttt_main_buttons('ttt_7')">0</button>
+    <button id="ttt_8" value="0" onclick="ttt_main_buttons('ttt_8')">0</button>
+    <p id="ttt"></p>
 
 </body>
 </html>
 
-<script src="js/blink_title.js"></script>
+<script src="js/change_title.js"></script>
+<script src="js/tic_tac_toe.js"></script>
+
+<script>
+    //ttt_main();
+</script>
