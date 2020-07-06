@@ -1,4 +1,4 @@
-// tic tac toe
+// tic tac toe console. Not sure if it works still.
 
 function init_board(){
 
@@ -62,14 +62,6 @@ function get_move(player, board){
 }
 
 
-
-
-
-
-
-
-
-
 function toggle_player(player){
 	if(player==1){
 		player = 2;										// Does this change the player outside of the function?
@@ -81,8 +73,6 @@ function toggle_player(player){
 	}
 	return player;
 }
-
-
 function analyze_board(board){
 	/* Check board conditions. It will return 0 if the game is still in play OR the player number that won OR 3 if the game is a draw */
 	var draw=true;
@@ -125,13 +115,6 @@ function analyze_board(board){
 }
 
 
-function end_game(){
-	for(i=0;i<9;i++){
-		document.getElementById("ttt_"+i).disabled = true;
-	}
-}
-
-
 function ttt_main_console(){
 	var board = init_board();
 	var player = 1;
@@ -151,67 +134,4 @@ function ttt_main_console(){
 		}
 	}
 	return state;
-}
-
-
-function get_board(){
-	/* Populates the board directly with the values. */
-	var board = [0,0,0, 0,0,0, 0,0,0];
-	for(i=0;i<9;i++){
-		board[i] = parseInt(document.getElementById("ttt_"+i).value);			// Does this case i to string?
-	}
-	return board;
-}
-
-
-function get_player(board){
-	var X = 0;
-	var O = 0;
-
-	for(i=0;i<board.length;i++){
-		switch(board[i]){
-			case 0:
-				break;
-			case 1: //"X":
-				X++;
-				break;
-			case 2: //"O":
-				O++;
-				break;
-			default:
-				console.log("Invalid player in get_player()");
-		}
-	}
-
-	if(X <= O){
-		return 1;//"X";
-	}else if(O <= X){
-		return 2;//"O";
-	}else{
-		return 0;//" ";
-	}
-}
-
-
-
-function ttt_main_buttons(pushed_button){
-	var board = get_board();
-	var state;
-	var player = get_player(board);
-
-	document.getElementById(pushed_button).innerHTML = player;
-	document.getElementById(pushed_button).value = player;
-	document.getElementById(pushed_button).disabled = true;
-
-	board = get_board();
-	state = analyze_board(board);
-
-	if(state == 1 || state == 2){
-		document.getElementById("ttt").innerHTML = "Player "+state+" won!";
-		end_game();
-
-	}else if(state == "3"){
-		document.getElementById("ttt").innerHTML = "Cat's Game!";
-		end_game();
-	}
 }

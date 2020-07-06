@@ -119,3 +119,54 @@ button {
 .contact p {
     text-align: right;
 }
+
+
+/* ================================================== Tic Tac Toe ==================================================*/
+
+.ttt {
+
+}
+
+.ttt_game {
+    margin-left: 45%;
+}
+
+.ttt_game button {
+    margin-left: 2px;
+    margin-top: 2px;
+    height: 40px;
+    width: 20px;
+    position: relative;
+    color: black;
+
+    font: monospace;
+}
+
+
+.ttt_reset button {
+    /* Only seems to work in div*/
+    margin-left: 45%;
+}
+
+
+/* ================================================== Chess ==================================================*/
+
+.chess_board div {
+    float: left;
+    width: 35px;
+    height: 35px;
+    margin: 1px;
+    padding: 10px;
+    border: 1px solid grey;
+    color: red;
+}
+
+.chess_board img {
+    height: 40px;
+    width: 40px;
+}
+
+.chess_board br {
+    font-size: 350%;
+    /*line-height: 50px;*/
+}

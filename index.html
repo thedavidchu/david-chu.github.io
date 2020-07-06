@@ -83,25 +83,61 @@ Main page HTML layout
         <p>https://www.linkedin.com/in/david-chu-51ba7017b/</p>
     </div>
 
-    <button id="ttt_0" value="0" onclick="ttt_main_buttons('ttt_0')">0</button>
-    <button id="ttt_1" value="0" onclick="ttt_main_buttons('ttt_1')">0</button>
-    <button id="ttt_2" value="0" onclick="ttt_main_buttons('ttt_2')">0</button>
-    <br>
-    <button id="ttt_3" value="0" onclick="ttt_main_buttons('ttt_3')">0</button>
-    <button id="ttt_4" value="0" onclick="ttt_main_buttons('ttt_4')">0</button>
-    <button id="ttt_5" value="0" onclick="ttt_main_buttons('ttt_5')">0</button>
-    <br>
-    <button id="ttt_6" value="0" onclick="ttt_main_buttons('ttt_6')">0</button>
-    <button id="ttt_7" value="0" onclick="ttt_main_buttons('ttt_7')">0</button>
-    <button id="ttt_8" value="0" onclick="ttt_main_buttons('ttt_8')">0</button>
-    <p id="ttt"></p>
+    <div id="ttt" class="ttt">
+        <h2>Tic Tac Toe</h2>
+        <div id="ttt_game" class="ttt_game">
+            <p id="ttt_msg">Click to play Tic Tac Toe!</p>
+            <button id="ttt_0" value="0" onclick="ttt_main_buttons('ttt_0')"> </button>
+            <button id="ttt_1" value="0" onclick="ttt_main_buttons('ttt_1')"> </button>
+            <button id="ttt_2" value="0" onclick="ttt_main_buttons('ttt_2')"> </button>
+            <br>
+            <button id="ttt_3" value="0" onclick="ttt_main_buttons('ttt_3')"> </button>
+            <button id="ttt_4" value="0" onclick="ttt_main_buttons('ttt_4')"> </button>
+            <button id="ttt_5" value="0" onclick="ttt_main_buttons('ttt_5')"> </button>
+            <br>
+            <button id="ttt_6" value="0" onclick="ttt_main_buttons('ttt_6')"> </button>
+            <button id="ttt_7" value="0" onclick="ttt_main_buttons('ttt_7')"> </button>
+            <button id="ttt_8" value="0" onclick="ttt_main_buttons('ttt_8')"> </button>
+        </div>
+        <div class="ttt_reset">
+            <br>
+            <button id="ttt_reset" onclick="ttt_reset_game()">Reset</button>
+        </div>
+    </div>
+
+    <div id="chess" class="chess">
+        <h2>Chess</h2>
+        <div id="chess_game" class="chess_game">
+            <p id="chess_msg" class="chess_msg">Play Chess</p>
+
+            <div id="chess_board" class="chess_board">
+                <script src="js/chess/chess_gen_board.js"></script>
+                <script>
+                    console.log("Hi!");
+                    chess_main();
+                </script>
+                <!--
+                <div id="chess_0" ondrop="drop(event)" ondragover="allowDrop(event)">
+                    <img src="static/Github_logo.PNG" draggable="true" ondragstart="drag(event)" id="pawn1">
+                </div>
+                -->
+                <div id="chess_100" ondrop="drop(event)" ondragover="allowDrop(event)">
+                    <img src="static/images/white-pawn.png">
+                </div>
+                
+            </div>
+            <div class="chess_reset">
+                <br>
+                <button id="chess_reset" onclick="chess_reset()">Reset</button>
+            </div>
+        </div>
+
+    </div>
+    
 
 </body>
 </html>
 
 <script src="js/change_title.js"></script>
-<script src="js/tic_tac_toe.js"></script>
-
-<script>
-    //ttt_main();
-</script>
+<script src="js/tic_tac_toe/tic_tac_toe.js"></script>
+<script src="js/chess/drag.js"></script>
