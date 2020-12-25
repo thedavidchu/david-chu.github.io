@@ -8,6 +8,17 @@
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
+        <!-- Hover Dropdown Menus -->
+        <style>
+            @media all and (min-width: 992px) {
+                .navbar .nav-item .dropdown-menu{ display: none; }
+                .navbar .nav-item:hover .nav-link{ color: #fff;  }
+                .navbar .nav-item:hover .dropdown-menu{ display: block; }
+                .navbar .nav-item .dropdown-menu{ margin-top:0; }
+            }
+        </style>
+
+        <!-- Favicon -->
         <link rel="icon" type="image/png" sizes="32x32" href="images/favicon/android-chrome-512x512.png">
 
         <title>David Chu - Main Page</title>
@@ -16,14 +27,14 @@
 
   <body>
         <!-- Top Navigation Bar -->
-        <div class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
             <!-- Navigation Bar on the Left -->
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link active" href="#Home">Home</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">About</a>
+                    <a class="nav-link dropdown-toggle" href="#About" data-toggle="dropdown">About</a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item font-weight-bold" href="#About">About Me</a>
                         <a class="dropdown-item" href="#Education">Education</a>
@@ -32,7 +43,7 @@
                     </div>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Portfolio</a>
+                    <a class="nav-link dropdown-toggle" href="#Portfolio" data-toggle="dropdown">Portfolio</a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item font-weight-bold" href="#Portfolio">Portfolio</a>
                         <a class="dropdown-item" href="#Coding">Coding</a>
@@ -54,11 +65,11 @@
                     <a class="col" href="https://github.com/thedavidchu/" target="_blank">GitHub</a>
                 </li>
             </ul>
-        </div>
+        </nav>
 
         <!-- Name Title -->
         <div id="Home" class="jumbotron fluid-container text-center">
-            <br>
+            <br><br>
             <h1>David Chu</h1>
         </div>
 
