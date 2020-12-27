@@ -226,39 +226,55 @@ class Board {
 			case -10:
 				if (i < 8) {return false;} else if (i % 8 < 2) {return false;} else {return true;}
 			case -6:
-				if (i < 8) {return false;} else if (i % 8 ) {return false;} else {return true;}
+				if (i < 8) {return false;} else if (i % 8 > 5) {return false;} else {return true;}
 			case 6:
-				if (i > 47) {return false;} else if (i % 8 ) {return false;} else {return true;}
+				if (i > 47) {return false;} else if (i % 8 < 3) {return false;} else {return true;}
 			case 10:
-				if (i > 47) {return false;} else if (i % 8 ) {return false;} else {return true;}
+				if (i > 47) {return false;} else if (i % 8 > 5) {return false;} else {return true;}
 			case 15:
-				if (i > 55) {return false;} else if (i % 8 ) {return false;} else {return true;}
+				if (i > 55) {return false;} else if (i % 8 == 0) {return false;} else {return true;}
 			case 17:
-				if (i > 55) {return false;} else if (i % 8 ) {return false;} else {return true;}
+				if (i > 55) {return false;} else if (i % 8 == 7) {return false;} else {return true;}
 
 			// Bishop
 			case -9:
-				if (i < 8) {return false;} else if (i % 8 != 0) {return false;} else {return true;}
+				if (i < 8) {return false;} else if (i % 8 == 0) {return false;} else {return true;}
 			case -7:
-				if (i < 8) {return false;} else if (i % 8 ) {return false;} else {return true;}
+				if (i < 8) {return false;} else if (i % 8 == 7) {return false;} else {return true;}
 			case 7:
-				if (i > 55) {return false;} else if (i % 8 ) {return false;} else {return true;}
+				if (i > 55) {return false;} else if (i % 8 == 0) {return false;} else {return true;}
 			case 9:
-				if (i > 55) {return false;} else if (i % 8 ) {return false;} else {return true;}
+				if (i > 55) {return false;} else if (i % 8 == 7) {return false;} else {return true;}
 
 			//Rook
 			case -8:
 				if (i < 8) {return false;} else if (false) {return false;} else {return true;}
 			case -1:
-				if (false) {return false;} else if (i % 8 ) {return false;} else {return true;}
+				if (false) {return false;} else if (i % 8 == 0) {return false;} else {return true;}
 			case 1:
-				if (false) {return false;} else if (i % 8 ) {return false;} else {return true;}
+				if (false) {return false;} else if (i % 8 == 7) {return false;} else {return true;}
 			case 8:
 				if (i < 8) {return false;} else if (false) {return false;} else {return true;}
 
 			default:
 				// ERROR!
 				return false;
+		}
+	}
+
+	#on_board_quick(i, move) {
+		/**
+		Quicker implementation of on_board
+		*/
+
+		let j = i + move;
+
+		// Check it is on the board vertically
+		if (j < 0) {return false} else if (j > 63) {return false}
+
+		// Check it is on the board horizontally
+		switch (move) {
+
 		}
 	}
 
@@ -278,38 +294,63 @@ class Board {
 		// Get legal moves
 		let legal = [];
 		let moves = [];
+		let max = 0;
 		let j = 0; 							// Temporary tracking variable
 		let piece = this.board[i];
 		let player = Math.sign(piece);
 
 		switch (piece) {
 			// Bishop
-			case 30:
-			case -30:
+			case 31:
+			case -31:
 				moves = [-9, -7, +7, +9];
+				max = 8;
 				break;
 			// Rook
 			case 50:
 			case -50:
 				moves = [-8, -1, +1, +8];
+				max = 8;
 				break;
 			// Queen
 			case 90:
 			case -90:
-			case 10000:
-			case -10000:
+				max = 8;
 				moves = [-9, -8, -7, -1, +1, +7, +8, +9];
 				break;
+			
+			// King
+			case 10000:
+			case -10000:
+				max = 1;
+				moves = [-9, -8, -7, -1, +1, +7, +8, +9];
+				break;
+
+			// Knight
+			case 30:
+			case -30:
+				max = 1;
+				moves = [-17, -15, -10, -6, 6, 10, 15, 17];
+
+			default:
+				// ERROR!
+				max = 0;
+				moves = [];
 		}
 
 		for (move of moves) {
 			j = i;
-			// While on board AND not capturing a player
+			// While on board AND not capturing a friendly player
 			while (this.#on_board(j, move) && player != Math.sign(this.board[j + move])) {
 				legal.push(j + move);
+
+				// If capture enemy, break
 				if (this.board[i] != 0) {
 					break;
-				} else if ()
+				// if can only move 1, break
+				} else if (max == 1) {
+					break;
+				}
 			}
 		}
 
