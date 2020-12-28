@@ -87,10 +87,11 @@
 
             <script src="js/chess/board/board.js"></script>
             <script>
+                
                 let board = new Board(null);
-                console.log(board.board);
+                let moves = board.all_legal_moves(-1);
+                console.log(moves)
                 board.print("chess_board");
-                console.log("Done");
             </script>
             
             
@@ -110,3 +111,16 @@
         <!-- <script src="js/chess/board/board.js"></script> -->
     </body>
 </html>
+
+<script>
+    // // Turn table red on click
+    // $("td").click(function() {
+    //     if($(this).css('background-color') == 'red') { $(this).css('background-color', 'green'); }
+    //     else { $(this).css('background-color', 'red'); }
+    // });
+
+    // $("td").hover(function() {
+    //     if($(this).css('background-color') == 'red') { $(this).css('background-color', 'green'); }
+    //     else { $(this).css('background-color', 'red'); }
+    // });
+</script>
