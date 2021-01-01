@@ -36,7 +36,6 @@ class Board {
 		}else{
 			this.board = array;
 		}
-		// return this;
 	}
 
 	// ============================== PLAY ============================== //
@@ -54,6 +53,19 @@ class Board {
 		:param j: move to here
 		:return: bool - whether legal move or not
 		*/
+		// 1. Check if there is a piece at i
+		if (this.board[i] == 0) {return false;}
+		// 2. Check if legal move
+		let legal = this.legal_moves(i);
+		if (!legal.includes(j)) {return false;}
+		// Pawn promotion
+		if ((this.board[j] == 10 && 0 <= j && j <= 7) || (this.board[j] == -10 && 56 <= j && j <= 63)) {
+			// Pawn promotion
+			let promotion = 9 * this.board[i];
+		} else {let promotion = null;}
+		
+		this.move(i, j, promotion=promotion);
+
 
 		return true;
 	}
@@ -61,6 +73,11 @@ class Board {
 	#raw_move(i, j) {
 		/**
 		Move a piece from i to j without any checks.
+
+		:param i: move from here
+		:param j: move to here
+
+		:return: none
 		*/
 
 		this.board[j] = this.board[i];
@@ -74,6 +91,8 @@ class Board {
 		:param i: move from here
 		:param j: move to here
 		:param promotion: what to promot pawn to - NOTE: sign must be correct!
+
+		:return: none
 		*/
 		let piece = this.board[i];
 		this.prev_move = [i, j];
@@ -651,6 +670,9 @@ class Board {
 	}
 
 	simulate(player=null, layers=1) {
+		/**
+		Simulate 1 layer for now.
+		*/
 		let possible = [];
 		let sim = null;
 
