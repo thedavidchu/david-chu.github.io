@@ -690,15 +690,20 @@ class Board {
 	simulate(player=null, layers=1) {
 		/**
 		Simulate 1 layer for now.
-		{[a, b]: [evaluation, [{}, {}, ..., {}] ], [a2, b2]: [evaluation2, [{}, {}, ..., {}] ]}
+		
+		Ideal format:
+			- {[a, b, c]: [evaluation, [{}, {}, ..., {}] ], [a2, b2, c2]: [evaluation2, [{}, {}, ..., {}] ]}
+		Practical format:
+			- [[[a, b, c], evaluation, [all possible moves]], [...], ...]
 
-		:param player:
-		:param layers:
+		:param player: int - player (+1 or -1).
+		:param layers: int - number of layers to iterate through.
 		*/
 		let possible = [];
 		let sim = null;
 		let promotion_pieces = [90, 50, 31, 30];
 
+		// Check player
 		if (player != null) {
 			let all_legal = this.all_legal_moves(player=player);
 		} else {
@@ -716,20 +721,20 @@ class Board {
 						for (let c of promotion_pieces) {
 							sim = new board(this.board, this.prev_move, this.turn, this.castle);
 							sim.get_move(a, b, promotion=c);
-							possible.push(sim.simulate(-player, layers--));
+							possible.push([[a, b, c], sim.evaluate(player), sim.simulate(-player, layers--)]);
 						}
 					} else if (this.board[a] == -10 && 56 <= b && b <= 63) {
 						// Check all black pawn promotion
 						for (let c of promotion_pieces) {
 							sim = new board(this.board, this.prev_move, this.turn, this.castle);
 							sim.get_move(a, b, promotion=-c);
-							possible.push(sim.simulate(-player, layers--));
+							possible.push([[a, b, c], sim.evaluate(player), sim.simulate(-player, layers--)]);
 						}
 					} else {
 						// Moves
 						sim = new board(this.board, this.prev_move, this.turn, this.castle);
 						sim.get_move(a, b);
-						possible.push(sim.simulate(-player, layers--));
+						possible.push([[a, b, null], sim.evaluate(player), sim.simulate(-player, layers--)]);
 					}
 					
 				}
