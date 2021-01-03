@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Not sure that this is, but I copied it from Matt Ing's -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
+        -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!--<link rel="stylesheet" href="static/stylesheet.css">-->
+    <link rel="icon" type="image/png" sizes="32x32" href="static/favicon_three.png">
+    
+    <title>David Chu - Main page</title>
+</head>
+
+
+<body>
+    <h1>Games</h1>
+    <p>Hello world! Lots of games to come :D </p>
+
+        <div id="ttt" class="ttt">
+        <h2>Tic Tac Toe</h2>
+        <p>Tic Tac Toe is playable as a two person game. X goes first; O second. Take turns clicking on your desired square and the game will tell you when someone wins. Click 'Reset' when you are finished and remember to have fun!</p>
+        <p>Further development will include:</p>
+        <ul>
+            <li>Creating a single- and multi-player version</li>
+            <li>Create an AI with </li>
+        </ul>
+        <div id="ttt_game" class="ttt_game">
+            <p id="ttt_msg">Click to play Tic Tac Toe!</p>
+            <button id="ttt_0" value="0" onclick="ttt_main_buttons('ttt_0')"> </button>
+            <button id="ttt_1" value="0" onclick="ttt_main_buttons('ttt_1')"> </button>
+            <button id="ttt_2" value="0" onclick="ttt_main_buttons('ttt_2')"> </button>
+            <br>
+            <button id="ttt_3" value="0" onclick="ttt_main_buttons('ttt_3')"> </button>
+            <button id="ttt_4" value="0" onclick="ttt_main_buttons('ttt_4')"> </button>
+            <button id="ttt_5" value="0" onclick="ttt_main_buttons('ttt_5')"> </button>
+            <br>
+            <button id="ttt_6" value="0" onclick="ttt_main_buttons('ttt_6')"> </button>
+            <button id="ttt_7" value="0" onclick="ttt_main_buttons('ttt_7')"> </button>
+            <button id="ttt_8" value="0" onclick="ttt_main_buttons('ttt_8')"> </button>
+        </div>
+        <div class="ttt_reset">
+            <br>
+            <button id="ttt_reset" onclick="ttt_reset_game()">Reset</button>
+        </div>
+    </div>
+</body>
+
+<script src="js/tic_tac_toe/tic_tac_toe.js"></script>
