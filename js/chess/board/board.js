@@ -1,6 +1,16 @@
 /**
 The class for a chess game.
 
+initial board setup = 
+[ -50, -30, -31, -90, -1000, -31, -30, -50, 
+  -10, -10, -10, -10,   -10, -10, -10, -10, 
+    0,   0,   0,   0,     0,   0,   0,   0, 
+    0,   0,   0,   0,     0,   0,   0,   0, 
+    0,   0,   0,   0,     0,   0,   0,   0, 
+    0,   0,   0,   0,     0,   0,   0,   0,
+   10,  10,  10,  10,    10,  10,  10,  10,
+   50,  30,  31,  90,  1000,  31,  30,  50,];
+
 board indices = 
 	[ 0,  1,  2,  3,  4,  5,  6,  7],
 	[ 8,  9, 10, 11, 12, 13, 14, 15],
@@ -13,14 +23,29 @@ board indices =
 
 ## Known bugs
 	1. Allows you to put yourself/ leave yourself in check
+	2. Game doesn't end with 3 repeated moves/ checkmate/ stalemate (goes until King capture)
 
 ## TODO
 	1. Change piece weights to real value (i.e. 100 = pawn, etc.)
-	2. Alpha-beta prune
+
+## Development Plans
+	I finished this on January 2, 2021. I think I am going to freeze the code; I am not exactly a chess afficionado, so this is just purely for the fun of it.
+	I do not want to refine the model anymore. Of course, it could perform better, but that is beyond the scope of the time I have allotted.
+
 */
 
 
-class Board {
+class ChessBoard {
+	/**
+	Chess Board class.
+
+	## Purpose
+	Play chess!
+
+	## Note
+	- I originally made a chess AI in Python for my CSC190 course in first-year EngSci. However, it doesn't run on the web. This one does!
+	*/
+
 	constructor(array=null, prev_move=null, turn=null, castle=null) {
 		/**
 		Construct the board.
@@ -59,6 +84,7 @@ class Board {
 	get_move(i, j) {
 		/**
 		Steps:
+			0. Check if it's their turn
 			1. Check if there's a piece at i
 			2. Check if legal move (check if en passant, check pawn promotion)
 			3. Update castle
@@ -70,9 +96,10 @@ class Board {
 		:param j: move to here
 		:return: bool - whether legal move or not
 		*/
+
 		'use strict';
 
-		// Check whose turn
+		// 0. Check whose turn
 		if (Math.sign(this.board[i]) == this.turn) {
 			// Allow
 		} else {return false;}
@@ -128,6 +155,7 @@ class Board {
 		*/
 
 		'use strict';
+
 		let piece = this.board[i];
 		this.prev_move = [i, j];
 		this.turn *= -1;
@@ -203,10 +231,12 @@ class Board {
 	#position_threatened(position, player) {
 		/**
 		Returns whether a position is under enemy attack.
+
 		:param position: position id of interest.
 		:param player: the player who is wondering whether they are being attacked.
 		:return: bool - whether they are under attack.
 		*/
+
 		'use strict';
 
 		let all_legal_obj = this.#all_legal_moves(-player, false);
@@ -234,6 +264,7 @@ class Board {
 		*/
 
 		'use strict';
+
 		if (player == null) {
 			// Return true if either player is in check
 			return this.#check(1) || this.#check(-1);
@@ -248,18 +279,19 @@ class Board {
 		}
 	}
 
-	#stale_mate(player) {
+	#stalemate(player) {
 		/**
 		Check if there are any legal moves left.
 
 		NOT IMPLEMENTED
 		*/
+
 		'use strict';
 		
 		return false;
 	}
 
-	#check_mate(player) {
+	#checkmate(player) {
 		/**
 		Check if there is a check mate.
 		Steps:
@@ -269,7 +301,7 @@ class Board {
 		NOT IMPLEMENTED
 		*/
 		// let check = this.#check(player=player);
-		// let stale = this.#stale_mate(player=player);
+		// let stale = this.#stalemate(player=player);
 		// return check && stale;
 
 		'use strict';
@@ -289,7 +321,9 @@ class Board {
 			- True if win
 			- False if no win
 		*/
+
 		'use strict';
+
 		let white = false, black = false;
 		for (let i = 0; i < this.board.length; i++) {
 			if (this.board[i] == 1000) {white = true;}
@@ -299,7 +333,7 @@ class Board {
 		if (white && black) {return false;}
 		else {
 			let winner = null;
-			this.init_print(); 
+			this.setup_board(); 
 			if (white) {winner = "WHITE";}
 			else if (black) {winner = "BLACK"} 
 			alert(winner + " HAS WON!"); 
@@ -308,8 +342,6 @@ class Board {
 	}
 
 	// ============================== LEGAL MOVES ============================== //
-	// Not check if castle through/ move into check. Will have to do this separately
-
 	#on_board(i, move) {
 		/**
 		Checks if the next move will keep the piece on the board.
@@ -381,9 +413,9 @@ class Board {
 	#legal_move_help(i, check_castle) {
 		/**
 		Private class. Help with non-pawn pieces. Also, does not check if a position will end up in check or checkmate.
-		N.B. Does not check for castling yet!
 
 		:param i: current position index
+		:return: list of legal positions in one turn
 		*/
 
 		'use strict';
@@ -485,25 +517,6 @@ class Board {
 		return legal;
 	}
 
-	get_legal_moves(i) {
-		/**
-		Get legal moves from the player.
-
-		NOTE: Do not allow castling through check!
-
-		:param i: position of interest.
-		:return: array - legal moves.
-		*/
-
-		'use strict';
-
-		if (Math.sign(this.board[i]) == this.turn) {
-			return this.#legal_moves(i, true);
-		} else {
-			return [];
-		}
-	}
-
 	#legal_moves(i, check_castle) {
 		/**
 		Get legal moves for the piece on square i, regardless of check.
@@ -574,6 +587,25 @@ class Board {
 		}
 	}
 
+	get_legal_moves(i) {
+		/**
+		Get legal moves from the player.
+
+		NOTE: Do not allow castling through check!
+
+		:param i: position of interest.
+		:return: array - legal moves.
+		*/
+
+		'use strict';
+
+		if (Math.sign(this.board[i]) == this.turn) {
+			return this.#legal_moves(i, true);
+		} else {
+			return [];
+		}
+	}
+
 	#all_legal_moves(player, check_castle) {
 		/**
 		Add all legal moves for a given player.
@@ -602,9 +634,34 @@ class Board {
 		}
 	}
 
+	#legal_triple() {
+		/**
+		Convert legal moves to [whence, whither, promotion].
+		:return: [[a, b, c], ...]
+		*/
+
+		'use strict';
+
+		let all_legal_obj = this.#all_legal_moves(this.turn, true);
+		let promotion_pieces = [90, 50, 31, 30];
+		let triple = [];
+		for (let a in all_legal_obj) {
+			a = parseInt(a);
+			for (let b of all_legal_obj[a]) {
+				// Check all white pawn promotion
+				if (this.board[a] == 10 && 0 <= b && b <= 7) {
+					for (let c of promotion_pieces) {triple.push([a, b, c]);}
+				// Check all black pawn promotion
+				} else if (this.board[a] == -10 && 56 <= b && b <= 63) {
+					for (let c of promotion_pieces) {triple.push([a, b, -c]);}
+				// No promotion
+				} else {triple.push([a, b, null]);}
+			}
+		}
+		return triple;
+	}
 
 	// ============================== FRONT-END DISPLAY ============================== //
-	// Deprecate. Make it sub-class
 	#init_stringify() {
 		/**
 		Stringify this.board into HTML table.
@@ -632,7 +689,7 @@ class Board {
 		return string;
 	}
 
-	init_print(id="chess_board") {
+	setup_board(id="chess_board") {
 		/**
 		Set up initial chess board.
 		*/
@@ -641,7 +698,7 @@ class Board {
 		element.innerHTML = string;
 	}
 
-	print(id="chess_board") {
+	update_board(id="chess_board") {
 		/**
 		Update chess board.
 		*/
@@ -662,6 +719,7 @@ class Board {
 
 		:return: int - value of board with respect to the player (i.e. higher is better for that player).
 		*/
+
 		'use strict';
 
 		let white=0;
@@ -821,7 +879,7 @@ class Board {
 
 	#simulate(player, layers) {
 		/**
-		Simulate 1 layer for now.
+		Simulate layers from now.
 		
 		Ideal format:
 			- {[a, b, c]: [evaluation, [{}, {}, ..., {}] ], [a2, b2, c2]: [evaluation2, [{}, {}, ..., {}] ]}
@@ -834,6 +892,7 @@ class Board {
 		:param player: int - player (+1 or -1).
 		:param layers: int - number of layers to iterate through.
 		*/
+
 		'use strict';
 
 		let possible = [];
@@ -857,20 +916,20 @@ class Board {
 					if (this.board[a] == 10 && 0 <= b && b <= 7) {
 						// Check all white pawn promotion
 						for (let c of promotion_pieces) {
-							sim = new Board(this.board, this.prev_move, this.turn, this.castle);
+							sim = new ChessBoard(this.board, this.prev_move, this.turn, this.castle);
 							sim.#move(a, b, c);
 							possible.push([[a, b, c], sim.#evaluate(), sim.#simulate(-turn, layers-1)]);
 						}
 					} else if (this.board[a] == -10 && 56 <= b && b <= 63) {
 						// Check all black pawn promotion
 						for (let c of promotion_pieces) {
-							sim = new Board(this.board, this.prev_move, this.turn, this.castle);
+							sim = new ChessBoard(this.board, this.prev_move, this.turn, this.castle);
 							sim.#move(a, b, -c);
 							possible.push([[a, b, c], sim.#evaluate(), sim.#simulate(-turn, layers-1)]);
 						}
 					} else {
 						// Moves
-						sim = new Board(this.board, this.prev_move, this.turn, this.castle);
+						sim = new ChessBoard(this.board, this.prev_move, this.turn, this.castle);
 						sim.#move(a, b);
 						possible.push([[a, b, null], sim.#evaluate(), sim.#simulate(-turn, layers-1)]);
 					}
@@ -883,10 +942,15 @@ class Board {
 
 	#naive_best_move_help(player, possible) {
 		/**
+		Search naive minmax tree for ideal move.
+
+		N.B. The minmax tree was created in simulate.
+
 		:param player:
 		:param possible:
 			- [[[a, b, c], evaluation, [all possible moves]], [...], ...]
 		*/
+
 		'use strict';
 
 		if (possible.length == 0) {
@@ -928,7 +992,17 @@ class Board {
 	}
 
 	#naive_best_move(player, layers){
+		/**
+		Get the best move using a naive minmax tree.
+
+		:param player: which player
+		:param layers: number of layers forward to look
+
+		:return: best move [whence, wither, promotion value]
+		*/
+
 		'use strict';
+
 		let turn = null;
 		
 		// Check player
@@ -943,7 +1017,13 @@ class Board {
 	}
 
 	naive_play_game(layers) {
+		/**
+		Advance one move with the naive minmax tree.
+		:param layers: number of layers to search.
+		*/
+
 		'use strict';
+		
 		let best_move = null;
 		let i = null, j = null, k = null;
 
@@ -955,7 +1035,7 @@ class Board {
 			k = best_move[0][2];
 
 			this.#move(i, j, k);
-			this.print();
+			this.update_board();
 
 			$("td").removeClass("table-info");
 
@@ -963,38 +1043,14 @@ class Board {
 			$("#"+j+"-chess").addClass("table-info");
 		}
 	}
-
-	#legal_triple() {
-		/**
-		Convert legal moves to [hence, hither, promotion].
-		:return: [[a, b, c], ...]
-		*/
-		'use strict';
-
-		let all_legal_obj = this.#all_legal_moves(this.turn, true);
-		let promotion_pieces = [90, 50, 31, 30];
-		let triple = [];
-		for (let a in all_legal_obj) {
-			a = parseInt(a);
-			for (let b of all_legal_obj[a]) {
-				// Check all white pawn promotion
-				if (this.board[a] == 10 && 0 <= b && b <= 7) {
-					for (let c of promotion_pieces) {triple.push([a, b, c]);}
-				// Check all black pawn promotion
-				} else if (this.board[a] == -10 && 56 <= b && b <= 63) {
-					for (let c of promotion_pieces) {triple.push([a, b, -c]);}
-				// No promotion
-				} else {triple.push([a, b, null]);}
-			}
-		}
-		return triple;
-	}
-
+	
 	#alpha_beta(layers, alpha, beta, player) {
 		/**
 		Call alpha-beta pruned tree.
 
-		Initial call: alpha_beta(origin, depth, -Infinity, +Infinity, 1)
+		Initial call: alpha_beta(origin, depth, -Infinity, +Infinity, 1).
+
+		Yes, alright, I got the pseudocode off of Wikipedia. Fine, you win. Thanks for reading my comments.
 
 		:param board: board that we want
 		:param layers:
@@ -1004,6 +1060,7 @@ class Board {
 		*/
 
 		'use strict';
+
 		let legal = this.#legal_triple();
 
 		if (layers <= 0 || legal.length == 0) {
@@ -1011,7 +1068,7 @@ class Board {
 		} else if (player == 1) {
 			let value = [null, -Infinity];
 			for (let i = 0; i < legal.length; i++) {
-				let child = new Board(this.board, this.prev_move, this.turn, this.castle);
+				let child = new ChessBoard(this.board, this.prev_move, this.turn, this.castle);
 				child.#move(...legal[i]);
 				// Find max
 				let prune = child.#alpha_beta(layers-1, alpha, beta, -1);
@@ -1026,7 +1083,7 @@ class Board {
 		} else if (player == -1) {
 			let value = [null, +Infinity];
 			for (let i = 0; i < legal.length; i++) {
-				let child = new Board(this.board, this.prev_move, this.turn, this.castle);
+				let child = new ChessBoard(this.board, this.prev_move, this.turn, this.castle);
 				child.#move(...legal[i]);
 				// Find min
 				let prune = child.#alpha_beta(layers-1, alpha, beta, +1);
@@ -1043,9 +1100,13 @@ class Board {
 
 	play_game(layers) {
 		/**
-		Play game using alpha-beta pruning.
+		Advance one move in the game using alpha-beta pruning.
+
+		:param layers: number of layers to search.
 		*/
+
 		'use strict';
+		
 		let best_move = this.#alpha_beta(layers, -Infinity, +Infinity, this.turn);
 		let i = null, j = null, k = null;
 
@@ -1057,7 +1118,7 @@ class Board {
 			k = best_move[0][2];
 
 			this.#move(i, j, k);
-			this.print();
+			this.update_board();
 
 			$("td").removeClass("table-info");
 
@@ -1066,6 +1127,3 @@ class Board {
 		}
 	}
 }
-/*
-
-*/

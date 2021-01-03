@@ -77,8 +77,9 @@
             <hr>
             <h2 class="text-center">Chess</h2>
             <p>Welcome to my Chess Game! I believe the 4 layer deep AI may have an ELO rating of at least 600, since I beat a chess.com AI with an ELO of 600 pretty easily in a one-out-of-one series. In other words, I tested it on one game against a chess AI with an ELO of 600.</p>
+            <p>Click the button to advance one move, based on a search with the number of layers deep as labled.</p>
+            <b>Use the 5 Layer button at your own discretion. It lags out my computer completely.</b>
 
-            <p>Use the 5 Layer button at your own discretion. It lags out my computer completely.</p>
             <hr>
 
             <table class= "table table-bordered">
@@ -89,8 +90,8 @@
 
             <script src="js/chess/board/board.js"></script>
             <script>
-                let board = new Board(null);
-                board.init_print("chess_board");
+                let board = new ChessBoard(null);
+                board.setup_board("chess_board");
             </script>
 
             <!-- Alpha-beta pruning -->
@@ -107,14 +108,14 @@
 
             <!-- Naive minmax tree -->
             
-            <b class="container">Naive Min-Max Chess AI</b>
+            <b class="container">Na&#239;ve Min-Max Chess AI</b>
             <div class="container btn-group">
                 
-                <button id="naive_play_game1" type="button" class="btn btn-dark" onclick="board.naive_play_game(1);">Naive 1 Layer</button>
-                <button id="naive_play_game2" type="button" class="btn btn-primary" onclick="board.naive_play_game(2);">Naive 2 Layers</button>
-                <button id="naive_play_game3" type="button" class="btn btn-success" onclick="board.naive_play_game(3);">Naive 3 Layers</button>
-                <button id="naive_play_game4" type="button" class="btn btn-warning" onclick="board.naive_play_game(4);">Naive 4 Layers</button>
-                <button id="naive_play_game5" type="button" class="btn btn-danger" onclick="board.naive_play_game(5);">Naive 5 Layers</button>
+                <button id="naive_play_game1" type="button" class="btn btn-dark" onclick="board.naive_play_game(1);">Na&#239;ve 1 Layer</button>
+                <button id="naive_play_game2" type="button" class="btn btn-primary" onclick="board.naive_play_game(2);">Na&#239;ve 2 Layers</button>
+                <button id="naive_play_game3" type="button" class="btn btn-success" onclick="board.naive_play_game(3);">Na&#239;ve 3 Layers</button>
+                <button id="naive_play_game4" type="button" class="btn btn-warning" onclick="board.naive_play_game(4);">Na&#239;ve 4 Layers</button>
+                <button id="naive_play_game5" type="button" class="btn btn-danger" onclick="board.naive_play_game(5);">Na&#239;ve 5 Layers</button>
             </div>
             
         </div>
@@ -188,7 +189,7 @@
                 board.get_move(a, b);
                 $("td").removeClass("table-danger table-warning table-success table-active table-info");
                 $(this).addClass("table-active");
-                board.print();
+                board.update_board();
                 board.check_win();
 
                 // Change board colours
