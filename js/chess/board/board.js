@@ -1006,7 +1006,7 @@ class Board {
 		'use strict';
 		let legal = this.#legal_triple();
 
-		if (layers <= 0 || Object.keys(legal).length == 0) {
+		if (layers <= 0 || legal.length == 0) {
 			return [null, this.#evaluate()];
 		} else if (player == 1) {
 			let value = [null, -Infinity];

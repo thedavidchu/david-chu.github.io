@@ -94,19 +94,25 @@
             </script>
 
             <!-- Alpha-beta pruning -->
-            <div class="btn-group">
-                <button id="play_game1" type="button" class="btn btn-primary" onclick="board.play_game(1);">1 Layer</button>
+            
+            <b class="container">Alpha-Beta Pruned Chess AI</b>
+            <div class="container btn-group">
+                
+                <button id="play_game1" type="button" class="btn btn-dark" onclick="board.play_game(1);">1 Layer</button>
                 <button id="play_game2" type="button" class="btn btn-primary" onclick="board.play_game(2);">2 Layers</button>
-                <button id="play_game3" type="button" class="btn btn-primary" onclick="board.play_game(3);">3 Layers</button>
+                <button id="play_game3" type="button" class="btn btn-success" onclick="board.play_game(3);">3 Layers</button>
                 <button id="play_game4" type="button" class="btn btn-warning" onclick="board.play_game(4);">4 Layers</button>
                 <button id="play_game5" type="button" class="btn btn-danger" onclick="board.play_game(5);">5 Layers</button>
-            </div>
+            </div><hr>
 
             <!-- Naive minmax tree -->
-            <div class="btn-group">
-                <button id="naive_play_game1" type="button" class="btn btn-primary" onclick="board.naive_play_game(1);">Naive 1 Layer</button>
+            
+            <b class="container">Naive Min-Max Chess AI</b>
+            <div class="container btn-group">
+                
+                <button id="naive_play_game1" type="button" class="btn btn-dark" onclick="board.naive_play_game(1);">Naive 1 Layer</button>
                 <button id="naive_play_game2" type="button" class="btn btn-primary" onclick="board.naive_play_game(2);">Naive 2 Layers</button>
-                <button id="naive_play_game3" type="button" class="btn btn-primary" onclick="board.naive_play_game(3);">Naive 3 Layers</button>
+                <button id="naive_play_game3" type="button" class="btn btn-success" onclick="board.naive_play_game(3);">Naive 3 Layers</button>
                 <button id="naive_play_game4" type="button" class="btn btn-warning" onclick="board.naive_play_game(4);">Naive 4 Layers</button>
                 <button id="naive_play_game5" type="button" class="btn btn-danger" onclick="board.naive_play_game(5);">Naive 5 Layers</button>
             </div>
@@ -207,23 +213,6 @@
                 }
                 
             }
-        });
-
-        // Clicking on button - four layer deep search
-        $("#play_game1").click(function() {
-            board.play_game(1);
-        });
-        $("#play_game2").click(function() {
-            board.play_game(2);
-        });
-        $("#play_game3").click(function() {
-            board.play_game(3);
-        });
-        $("#play_game4").click(function() {
-            board.play_game(4);
-        });
-        $("#play_game4").click(function() {
-            board.play_game(5);
         });
     });
     
