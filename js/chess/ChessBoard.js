@@ -27,6 +27,8 @@ board indices =
 
 ## TODO
 	1. Change piece weights to real value (i.e. 100 = pawn, etc.)
+	2. Revise so you can't put/leave yourself in check
+	3. Do stalemate
 
 ## Development Plans
 	I finished this on January 2, 2021. I think I am going to freeze the code; I am not exactly a chess afficionado, so this is just purely for the fun of it.
@@ -80,6 +82,48 @@ class ChessBoard {
 		else {this.castle = Array.from(castle);}
 	}
 
+	get_player(raw_player) {
+		/**
+		Converts 'raw player' format into +1 or -1.
+
+		:param player:
+			- +1 = 'white'/'w' (any combination of upper/lower case), +1/'1'/'+1'
+			- -1 = 'black'/'b' (ditto), -1/'-1'
+
+			- true/'t' = whose turn
+			- false/'f' = opponent
+		*/
+
+		'strict mode';
+
+		let str_player = String(raw_player).toLowerCase();
+
+		switch (str_player) {
+			case 'white':
+			case 'w':
+			case '1':
+			case '+1':
+				return +1;
+
+			case 'black':
+			case 'b':
+			case '-1':
+				return -1;
+
+			case 't':
+			case 'true':
+				return this.turn;
+
+			case 'f':
+			case '':
+			case 'false':
+				return -this.turn;
+
+			default:
+				return;
+		}
+	}
+
 	// ============================== FRONT-END GET MOVES ============================== //
 	get_move(i, j) {
 		/**
@@ -99,11 +143,13 @@ class ChessBoard {
 
 		'use strict';
 
+		let turn = this.turn;
+
 		// 0. Check whose turn
-		if (Math.sign(this.board[i]) == this.turn) {/* Allow */} else {return false;}
+		if (Math.sign(this.board[i]) != turn) {return false;}
 
 		// 1. Check if there is a piece at i
-		if (this.board[i] == 0) {return false;}
+		else if (this.board[i] == 0) {return false;}
 		
 		// 2. Check if legal move
 		let legal = this.#legal_moves(i, true);
@@ -123,6 +169,22 @@ class ChessBoard {
 			}
 		}
 		this.#move(i, j, promotion);
+
+		// Check mate
+		let mate = this.#is_mate(turn);
+		console.log(mate);
+		switch (mate) {
+			case 'checkmate':
+				this.end_board(turn);
+			case 'stalemate':
+				this.end_board(0);
+			case 'check':
+				return true;
+			case 'none':
+				return true;
+			default:
+				return;
+		}
 		return true;
 	}
 
@@ -254,65 +316,163 @@ class ChessBoard {
 		}
 	}
 
-	#check(player) {
+	#is_check(player) {
 		/**
-		Check if the player is in check.
-		:param player: player of interest
-			- null: check both players
-		:return: return if the player is in check.
+		See if player is in check.
+
+		:param player: which player (+1 or -1).
+		:return: bool - whether that player is in check.
 		*/
 
 		'use strict';
 
-		if (player == null) {
-			// Return true if either player is in check
-			return this.#check(1) || this.#check(-1);
-		} else if (player == 1 || player == -1) {
-			let king_id = this.board.indexOf(player * 1000);
-			return this.#position_threatened(king_id, player)
-			
-			return all_legal.includes(kind_id);
-		} else {
-			// ERROR!
-			return false;
-		}
+		let king_id = this.board.indexOf(1000 * player);
+		return this.#position_threatened(king_id, player);
 	}
 
-	#stalemate(player) {
+	get_check(raw_player) {
 		/**
-		Check if there are any legal moves left.
+		See if player is in check.
+		
+		:param raw_player: determines who to check is in check
+			true = player
+			false = opponent
+			+1 = white
+			-1 = black
 
-		NOT IMPLEMENTED
+		:return: whether that player is in check.
+		*/
+
+		'use strict';
+
+		let player = this.get_player(raw_player);
+		return this.#is_check(player);
+	}
+
+	#is_check_next_move(player) {
+		/**
+		Determine if all moves one step from now result in check. Basically determines if there are any legal moves left.
+
+		:param player: 
+		:return: if the player will be in check next move (doesn't care whether the player is currently in check!)
 		*/
 
 		'use strict';
 		
-		return false;
+		let legal = this.#legal_triple(player);
+
+		for (let i = 0; i < legal.length; i++) {
+			// Create new chessboard
+			let child = new ChessBoard(this.board, this.prev_move, this.turn, this.castle);
+			child.#move(...legal[i]);
+			let result = child.#is_check(this.turn);
+
+			if (result == false) {return false;}	// Return false if there is a non-check position
+		}
+		// Return true if all positions result in check
+		return true;
 	}
 
-	#checkmate(player) {
-		/**
-		Check if there is a check mate.
-		Steps:
-			1. Check if check
-			2. Check if legal moves to get out of check
+	test(player) {return this.#is_check_next_move(player);}
 
-		NOT IMPLEMENTED
+	// DO NOT USE - INEFFICIENT
+	#is_stalemate(player) {
+		/**
+		Determine if stalemate.
+
+		:param player:
+		:return: bool - whether stalemate or not (i.e. NOT in check, but no legal move).
 		*/
-		// let check = this.#check(player=player);
-		// let stale = this.#stalemate(player=player);
-		// return check && stale;
 
 		'use strict';
 
-		if (player == null) {return false;}
-		else if (player == 1 || player == -1) {
-			let king_id = this.board.indexOf(player * 1000);
-			if (king_id == -1) {return true;} else {return false;}
-		} else {return false;}		// ERROR!
+		return this.#is_check_next_move(player) && !this.#is_check(player);
 	}
 
-	#check_king_captured() {
+	// DO NOT USE - INEFFICIENT
+	get_stalemate(raw_player) {
+		/**
+		Determine if stalemate.
+
+		:param player:
+		:return: bool - whether stalemate or not (i.e. NOT in check, but no legal move).
+		*/
+
+		'use strict';
+
+		let player = this.get_player(raw_player);
+		return this.#is_stalemate(player);
+	}
+
+	// DO NOT USE - INEFFICIENT
+	#is_checkmate(player) {
+		/**
+		Determines if check mate.
+
+		:param player: player (+1 or -1)
+		:return: bool - whether they are in checkmate or not.
+		*/
+
+		'strict mode';
+
+		return this.#is_check(player) && this.#is_check_next_move(player);
+	}
+
+	// DO NOT USE - INEFFICIENT
+	get_checkmate(raw_player) {
+		/**
+		Determines if check mate.
+
+		:param player: player (+1 or -1)
+		:return: bool - whether they are in checkmate or not.
+		*/
+
+		'strict mode';
+
+		let player = this.get_player(raw_player);
+		return this.#is_checkmate(player);
+	}
+
+	#is_mate(player) {
+		/**
+		Determine if there is a mate of any kind.
+
+		:param player: player (+1 or -1)
+		:return: str
+			- whether there is a checkmate, stalemate, check, or nothing
+		*/
+
+		'use strict';
+
+		let check = this.#is_check(player);
+		let check_next = this.#is_check_next_move(player);
+
+		// Checkmate
+		if (check && check_next) {return 'checkmate';}
+		// Stalemate
+		else if (!check && check_next) {return 'stalemate';}
+		// Check
+		else if (check && !check_next) {return 'check';}
+		// None 
+		else {return 'none';}
+	}
+
+	get_mate(raw_player) {
+		/**
+		Determine if there is a mate of any kind.
+
+		:param player: player (+1 or -1)
+		:return: str
+			- whether there is a checkmate, stalemate, check, or nothing
+		*/
+
+		'use strict';
+
+		let player = this.get_player(raw_player);
+		return this.#is_mate(player);
+	}
+
+	#is_king_captured() {
 		/**
 		Return winning player when a king is captured.
 
@@ -353,11 +513,11 @@ class ChessBoard {
 
 		if (white && black) {return false;}
 		else {
-			let winner = null;
-			this.setup_board(); 
-			if (white) {winner = "WHITE";}
-			else if (black) {winner = "BLACK"} 
-			alert(winner + " HAS WON!"); 
+			if (white) {
+				this.end_board(+1);
+			} else if (black) {
+				this.end_board(-1)
+			}
 			return true;
 		}
 	}
@@ -655,15 +815,16 @@ class ChessBoard {
 		}
 	}
 
-	#legal_triple() {
+	#legal_triple(player) {
 		/**
 		Convert legal moves to [whence, whither, promotion].
+		:param player: player
 		:return: [[a, b, c], ...]
 		*/
 
 		'use strict';
 
-		let all_legal_obj = this.#all_legal_moves(this.turn, true);
+		let all_legal_obj = this.#all_legal_moves(player, true);
 		let promotion_pieces = [90, 50, 31, 30];
 		let triple = [];
 		for (let a in all_legal_obj) {
@@ -731,20 +892,28 @@ class ChessBoard {
 		}
 	}
 
-	reset(board=null) {
-		if (board == null) {
-			this.board = [0, 0, 0, 0, 0, 0, 0, -50, 
-						0, 0, 0, 0, 0, -1000, -10, 0, 
-						-10, 0, 0, -10, -31, 0, 0, -10, 
-						0, 0, 0, -10, 0, 0, 0, 0, 
-						0, 0, -50, 0, 10, 0, 0, 0, 
-						0, 0, 0, -30, 31, 10, 0, 0, 
-						0, 50, 0, 0, 30, 0, 10, 10, 
-						0, 0, 0, 0, 1000, 31, 0, 50];
-		} else {this.board = board;}
-		this.update_board();
-		this.turn = 1;
-		return "RESET!";
+	end_board(winner, id="chess_board") {
+		/**
+		Output final board and result.
+		*/
+
+		let str_winner = '';
+
+		switch (winner) {
+			case 1:
+				alert('Checkmate! White has won!');
+				break;
+			case -1:
+				alert('Checkmate! Black has won!');
+				break;
+			case 0:
+				alert("Stalemate! It's a draw!");
+				break;
+			default:
+				return;
+		}
+		this.setup_board();
+		return;
 	}
 	
 	// ============================== AI PLAY ============================== //
@@ -914,7 +1083,6 @@ class ChessBoard {
 		return tally;
 	}
 
-	// DEPRECIATED -- at least when using for min/max tree
 	#simulate(player, layers) {
 		/**
 		Simulate layers from now.
@@ -979,122 +1147,12 @@ class ChessBoard {
 		}
 		return possible;
 	}
-
-	// DEPRECIATED
-	#naive_best_move_help(player, possible) {
-		/**
-		Search naive minmax tree for ideal move.
-
-		N.B. The minmax tree was created in simulate.
-
-		DEPRECIATED
-
-		:param player:
-		:param possible:
-			- [[[a, b, c], evaluation, [all possible moves]], [...], ...]
-		*/
-
-		'use strict';
-
-		if (possible.length == 0) {
-			return;
-		} else {
-			if (player == 1) {
-				// White, find max
-				let max = [null, -Infinity];
-				let temp = null;
-
-				for (let i in possible) {
-					temp = this.#naive_best_move_help(-player, possible[i][2]);
-					if (temp == undefined) {
-						temp = [possible[i][0], possible[i][1]];
-					}
-
-					if (temp[1] > max[1]) {
-						max = [possible[i][0], temp[1]];
-					}
-				}
-				return max;
-
-			} else if (player == -1) {
-				// Black, find min
-				let min = [null, Infinity];
-				let temp = null;
-				for (let i in possible) {
-					temp = this.#naive_best_move_help(-player, possible[i][2]);
-					if (temp == undefined) {
-						temp = [possible[i][0], possible[i][1]];
-					}
-					if (temp[1] < min[1]) {
-						min = [possible[i][0], temp[1]];
-					}
-				}
-				return min;
-			}
-		}
-	}
-
-	// DEPRECIATED
-	#naive_best_move(player, layers){
-		/**
-		Get the best move using a naive minmax tree.
-
-		DEPRECIATED
-
-		:param player: which player
-		:param layers: number of layers forward to look
-
-		:return: best move [whence, wither, promotion value]
-		*/
-
-		'use strict';
-
-		let turn = null;
-		
-		// Check player
-		if (player != null) {turn = player;}
-		else {turn = this.turn;}
-
-		let possible = this.#simulate(turn, layers);
-		let best_move = this.#naive_best_move_help(turn, possible);
-
-		return best_move;
-	}
-
-	// DEPRECIATED
-	naive_play_game(layers) {
-		/**
-		Advance one move with the naive minmax tree.
-		:param layers: number of layers to search.
-		*/
-
-		'use strict';
-		
-		let best_move = null;
-		let i = null, j = null, k = null;
-
-		// {Take a turn
-		if (!this.check_win()) {
-			best_move = this.#naive_best_move(this.turn, layers);
-			i = best_move[0][0];
-			j = best_move[0][1];
-			k = best_move[0][2];
-
-			this.#move(i, j, k);
-			this.update_board();
-
-			$("td").removeClass("table-info");
-
-			$("#"+i+"-chess").addClass("table-info");
-			$("#"+j+"-chess").addClass("table-info");
-		}
-	}
 	
-	#alpha_beta(layers, alpha, beta, player, random) {
+	#alpha_beta(layers, alpha, beta, player, random, top) {
 		/**
 		Call alpha-beta pruned tree.
 
-		Initial call: alpha_beta(origin, depth, -Infinity, +Infinity, 1).
+		Initial call: alpha_beta(origin, depth, -Infinity, +Infinity, +/-1, true/false, true).
 
 		Yes, alright, I got the pseudocode off of Wikipedia. Fine, you win. Thanks for reading my comments.
 
@@ -1104,52 +1162,78 @@ class ChessBoard {
 				- Say this doubles the computation on each node. Then to break even, we must discard at least (1 - 2^(-1/4) ~= 16% more moves) when we search 4 layers deep.
 
 		:param board: board that we want
-		:param layers:
-		:param alpha:
-		:param beta:
-		:param player:
+		:param layers: number of layers to search
+		:param alpha: alpha value
+		:param beta: beta value
+		:param player: player (+1 or -1)
+
+		:return: [[a, b, c], value]
+			- a = starting position
+			- b = ending position
+			- c = promotion value (e.g. -90 for black Queen or null if N/A)
+			- value = "score" for how valuable that position is
 		*/
 
 		'use strict';
 
 		// End search if the bottom layer or the game has finished. This is noticeably faster!
-		if (layers <= 0){return [null, this.#evaluate()];}
-		else if (this.#check_king_captured()) {return [null, this.#evaluate()];}
+		if (layers <= 0){return this.#evaluate();}
+		else if (this.#is_king_captured()) {return this.#evaluate();}
 
 		// End search if no legal moves
-		let legal = this.#legal_triple();
+		let legal = this.#legal_triple(player);
+		let all_equal_moves = [];			// Use only with random
+		let value = null;
+
 		if (legal.length == 0) {
-			return [null, this.#evaluate()];
+			return this.#evaluate();
 		} else if (player == 1) {
-			let value = [null, -Infinity];
+			value = [null, -Infinity];
 			for (let i = 0; i < legal.length; i++) {
+				// Create new chessboard
 				let child = new ChessBoard(this.board, this.prev_move, this.turn, this.castle);
 				child.#move(...legal[i]);
-				// Find max
-				let prune = child.#alpha_beta(layers-1, alpha, beta, -1, random);
-				if (prune[1] > value[1]) {value = [legal[i], prune[1]];} 
-				else if (prune[1] == value[1] && random && Math.random() > 0.5) {value = [legal[i], prune[1]];}
+				// Find max of new vs stored old
+				let prune = child.#alpha_beta(layers-1, alpha, beta, -1, random, false);
+				if (prune > value[1]) {
+					value = [legal[i], prune];
+					if (random) {all_equal_moves = [legal[i]];}
+				}
+				else if (prune == value[1] && random) {all_equal_moves.push(legal[i]);}
 
 				// Find alpha
-				alpha = Math.max(alpha, value[1]);
+				alpha = Math.max(alpha, prune);
 				if (alpha >= beta) {break;}
 			}
-			return value;
 		} else if (player == -1) {
-			let value = [null, +Infinity];
+			value = [null, +Infinity];
 			for (let i = 0; i < legal.length; i++) {
 				let child = new ChessBoard(this.board, this.prev_move, this.turn, this.castle);
 				child.#move(...legal[i]);
 				// Find min
-				let prune = child.#alpha_beta(layers-1, alpha, beta, +1, random);
-				if (prune[1] < value[1]) {value = [legal[i], prune[1]];} 
-				else if (prune[1] == value[1] && random && Math.random() > 0.5) {value = [legal[i], prune[1]];}
+				let prune = child.#alpha_beta(layers-1, alpha, beta, +1, random, false);
+				if (prune < value[1]) {
+					value = [legal[i], prune]; 
+					if (random) {all_equal_moves = [legal[i]];}
+				} 
+				else if (prune == value[1] && random) {all_equal_moves.push(legal[i]);}
 
 				// Find beta
-				beta = Math.min(beta, value[1]);
+				beta = Math.min(beta, prune);
 				if (beta <= alpha) {break;}
 			}
-			return value;
+		}
+
+		if (top) {
+			// Return move rather value!
+			if (random) {
+				return [all_equal_moves[Math.floor(Math.random * all_equal_moves.length)], value[1]];
+			} else {
+				return value;
+			}
+		} else{
+			// Return value
+			return value[1];
 		}
 	}
 
@@ -1161,27 +1245,18 @@ class ChessBoard {
 		*/
 
 		'use strict';
-		
-		let best_move = this.#alpha_beta(layers, -Infinity, +Infinity, this.turn, false);
-		console.log(best_move)
-		let i = null, j = null, k = null;
 
 		// {Take a turn
-		if (!this.#check_king_captured()) {
-			// best_move = this.#naive_best_move(this.turn, layers);
-			i = best_move[0][0];
-			j = best_move[0][1];
-			k = best_move[0][2];
+		if (!this.#is_king_captured()) {
+			let best_move = this.#alpha_beta(layers, -Infinity, +Infinity, this.turn, false, true);
 
-			console.log("BEST MOVE RATING:", best_move[1])
-
-			this.#move(i, j, k);
+			this.#move(...best_move[0]);
 			this.update_board();
 
 			$("td").removeClass("table-info");
 
-			$("#"+i+"-chess").addClass("table-info");
-			$("#"+j+"-chess").addClass("table-info");
+			$("#"+best_move[0][0]+"-chess").addClass("table-info");
+			$("#"+best_move[0][1]+"-chess").addClass("table-info");
 		}
 	}
 }
