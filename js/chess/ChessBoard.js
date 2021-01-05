@@ -26,6 +26,7 @@ board indices =
 	2. Gives notification of win/ draw before it updates board.
 	3. The AI can't checkmate itself!!!
 	4. If choose illegal move due to check, it will still turn squares blue as if you have moved.
+	5. Highlights moves
 
 ## TODO
 	1. Change piece weights to real value (i.e. 100 = pawn, etc.)
@@ -776,14 +777,24 @@ class ChessBoard {
 
 		NOTE: Do not allow castling through check!
 
-		:param i: position of interest.
+		:param a: position of interest.
 		:return: array - legal moves.
 		*/
 
 		'use strict';
 
 		if (Math.sign(this.board[i]) == this.turn) {
-			return this.#legal_moves(i, true);
+			let legal = this.#legal_moves(i, true);
+			let actual_legal = [];
+
+			// Check that it does not land in check
+			for (let j = 0; j < legal.length; j++) {
+				// Check if you put yourself into check!
+				let child = new ChessBoard(this.board, this.prev_move, this.turn, this.castle);
+				child.#move(i, legal[j], null);
+				if (!child.#is_check(this.turn)) {actual_legal.push(legal[j]);}
+			}
+			return actual_legal;
 		} else {
 			return [];
 		}

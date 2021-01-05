@@ -190,7 +190,12 @@
 
         // Clicking on chess board
         $("td").click(function() {
+            /**
+            Update board when it is clicked on.
+            */
+
             let class_name = $(this).attr("class");
+            
             // Deselect selected piece
             if (class_name.includes("table-danger")) {
                 $("td").removeClass("table-danger table-warning table-success table-active");
