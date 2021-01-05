@@ -873,10 +873,10 @@ class ChessBoard {
 				k = 8*i + j;
 				if ((i % 2 == 0 && j % 2 == 0) || (i % 2 == 1 && j % 2 == 1)) {
 					// Colour dark - style='background-color: black;'
-					string += "<td id='"+ k + "-chess' class='table-'>" + letter[this.board[k]] + "</td>";
+					string += "<td id='"+ k + "-chess' class='black-square'>" + letter[this.board[k]] + "</td>";
 				} else {
 					// Colour light
-					string += "<td id='"+ k + "-chess' class='table-secondary'>" + letter[this.board[k]] + "</td>";
+					string += "<td id='"+ k + "-chess' class='white-square'>" + letter[this.board[k]] + "</td>";
 				}
 			}
 			string +=  "</tr>";

@@ -30,3 +30,48 @@
 .ttt p, ul {
     text-indent: 25px;
 }
+
+/* ============================== CHESS ============================== */
+
+.white-square {
+    /* Bootstrap -light (~lightgray)*/
+    background-color: white;
+}
+
+.black-square {
+    /* Bootstrap -dark (~gray)*/
+    background-color: grey;
+}
+
+.chess-passive-hover {
+    /* Bootstrap -active??? */
+    background-color: lightgray;
+}
+
+.chess-active-hover {
+    /* Bootstrap -info (~teal) */
+    background-color: lightblue;
+}
+
+.chess-active {
+    background-color: lightskyblue;
+}
+
+.chess-legal {
+    background-color: lemonchiffon;
+}
+
+.chess-attacked {
+    background-color: red;
+}
+
+.chess-legal-hover {
+    background-color: green;
+}
+
+.chess-move {
+    background-color: seagreen;
+}
+
+
+
