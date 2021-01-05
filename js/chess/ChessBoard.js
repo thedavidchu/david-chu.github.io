@@ -1127,15 +1127,9 @@ class ChessBoard {
 				child.#move(...legal[i]);
 				// Find max
 				let prune = child.#alpha_beta(layers-1, alpha, beta, -1, random);
-				
-// TEST!!!
-				if (prune[0] != null) {
-					console.log(this.board[prune[0][0]], prune[0][1]);
-					if (this.board[prune[0][0]] == 50 && prune[0][1] == 9) {console.log(prune);}
-				}
-// TEST!!!
-				if (prune[1] > value[1]) {value = prune;} 
-				else if (prune[1] == value[1] && random && Math.random() > 0.5) {value = prune;}
+				if (prune[1] > value[1]) {value = [legal[i], prune[1]];} 
+				else if (prune[1] == value[1] && random && Math.random() > 0.5) {value = [legal[i], prune[1]];}
+
 				// Find alpha
 				alpha = Math.max(alpha, value[1]);
 				if (alpha >= beta) {break;}
@@ -1148,8 +1142,9 @@ class ChessBoard {
 				child.#move(...legal[i]);
 				// Find min
 				let prune = child.#alpha_beta(layers-1, alpha, beta, +1, random);
-				if (prune[1] < value[1]) {value = prune;} 
-				else if (prune[1] == value[1] && random && Math.random() > 0.5) {value = prune;}
+				if (prune[1] < value[1]) {value = [legal[i], prune[1]];} 
+				else if (prune[1] == value[1] && random && Math.random() > 0.5) {value = [legal[i], prune[1]];}
+
 				// Find beta
 				beta = Math.min(beta, value[1]);
 				if (beta <= alpha) {break;}
@@ -1168,11 +1163,12 @@ class ChessBoard {
 		'use strict';
 		
 		let best_move = this.#alpha_beta(layers, -Infinity, +Infinity, this.turn, false);
+		console.log(best_move)
 		let i = null, j = null, k = null;
 
 		// {Take a turn
 		if (!this.#check_king_captured()) {
-			best_move = this.#naive_best_move(this.turn, layers);
+			// best_move = this.#naive_best_move(this.turn, layers);
 			i = best_move[0][0];
 			j = best_move[0][1];
 			k = best_move[0][2];
