@@ -2,9 +2,16 @@
 
 
 /* ============================== CHESS ============================== */
+
+td {
+    max-height: 100px;
+    max-width: 100px;
+    white-space: nowrap;
+}
+
 .chess-board {
-    max-height: 600px;
-    max-width: 600px;
+    max-height: 800px;
+    max-width: 800px;
     text-align: center; 
 }
 

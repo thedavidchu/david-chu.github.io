@@ -87,13 +87,15 @@
                 <li><b>AI player: </b>Click a the button saying how many layers you would like it to search!</li>
             </ol>
 
+            <button id="mobile" type="button" class="btn btn-secondary row justify-content-center" onclick="$('.table').toggleClass('table-responsive')">Mobile Device</button>
+
             <hr>
             <div class="row justify-content-center">
-            <table class= "table table-bordered border-dark chess-board">
-                <thead></thead>
-                <tbody id="chess_board"></tbody>
-            </table>
-        </div>
+	            <table class= "table table-bordered chess-board">
+	                <thead></thead>
+	                <tbody id="chess_board"></tbody>
+	            </table>
+        	</div>
 
 
             <script src="js/chess/ChessBoard.js"></script>
