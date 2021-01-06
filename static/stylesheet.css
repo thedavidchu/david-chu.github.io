@@ -2,11 +2,15 @@
 
 
 /* ============================== CHESS ============================== */
-$darkpaleblue: 
+.chess-board {
+    max-height: 600px;
+    max-width: 600px;
+    text-align: center; 
+}
 
 
 .white-square {
-    background-color: ivory;    /* white */
+    background-color: white;    /* white */
 }
 
 .black-square {

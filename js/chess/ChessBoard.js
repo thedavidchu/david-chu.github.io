@@ -377,63 +377,63 @@ class ChessBoard {
 		return true;
 	}
 
-	// DO NOT USE - INEFFICIENT
-	#is_stalemate(player) {
-		/**
-		Determine if stalemate.
+	// // DO NOT USE - INEFFICIENT
+	// #is_stalemate(player) {
+	// 	/**
+	// 	Determine if stalemate.
 
-		:param player:
-		:return: bool - whether stalemate or not (i.e. NOT in check, but no legal move).
-		*/
+	// 	:param player:
+	// 	:return: bool - whether stalemate or not (i.e. NOT in check, but no legal move).
+	// 	*/
 
-		'use strict';
+	// 	'use strict';
 
-		return this.#is_check_next_move(player) && !this.#is_check(player);
-	}
+	// 	return this.#is_check_next_move(player) && !this.#is_check(player);
+	// }
 
-	// DO NOT USE - INEFFICIENT
-	get_stalemate(raw_player) {
-		/**
-		Determine if stalemate.
+	// // DO NOT USE - INEFFICIENT
+	// get_stalemate(raw_player) {
+	// 	/**
+	// 	Determine if stalemate.
 
-		:param player:
-		:return: bool - whether stalemate or not (i.e. NOT in check, but no legal move).
-		*/
+	// 	:param player:
+	// 	:return: bool - whether stalemate or not (i.e. NOT in check, but no legal move).
+	// 	*/
 
-		'use strict';
+	// 	'use strict';
 
-		let player = this.get_player(raw_player);
-		return this.#is_stalemate(player);
-	}
+	// 	let player = this.get_player(raw_player);
+	// 	return this.#is_stalemate(player);
+	// }
 
-	// DO NOT USE - INEFFICIENT
-	#is_checkmate(player) {
-		/**
-		Determines if check mate.
+	// // DO NOT USE - INEFFICIENT
+	// #is_checkmate(player) {
+	// 	/**
+	// 	Determines if check mate.
 
-		:param player: player (+1 or -1)
-		:return: bool - whether they are in checkmate or not.
-		*/
+	// 	:param player: player (+1 or -1)
+	// 	:return: bool - whether they are in checkmate or not.
+	// 	*/
 
-		'strict mode';
+	// 	'strict mode';
 
-		return this.#is_check(player) && this.#is_check_next_move(player);
-	}
+	// 	return this.#is_check(player) && this.#is_check_next_move(player);
+	// }
 
-	// DO NOT USE - INEFFICIENT
-	get_checkmate(raw_player) {
-		/**
-		Determines if check mate.
+	// // DO NOT USE - INEFFICIENT
+	// get_checkmate(raw_player) {
+	// 	/**
+	// 	Determines if check mate.
 
-		:param player: player (+1 or -1)
-		:return: bool - whether they are in checkmate or not.
-		*/
+	// 	:param player: player (+1 or -1)
+	// 	:return: bool - whether they are in checkmate or not.
+	// 	*/
 
-		'strict mode';
+	// 	'strict mode';
 
-		let player = this.get_player(raw_player);
-		return this.#is_checkmate(player);
-	}
+	// 	let player = this.get_player(raw_player);
+	// 	return this.#is_checkmate(player);
+	// }
 
 	#is_mate(player) {
 		/**
@@ -856,6 +856,28 @@ class ChessBoard {
 	}
 
 	// ============================== FRONT-END DISPLAY ============================== //
+	#chess_icons(type) {
+		/**
+		Return object of icons.
+		*/
+		// let letter = {0: '&nbsp;', 10: 'P', 30: 'N', 31: 'B', 50: 'R', 90: 'Q', 1000: 'K', "-10": '<b>p</b>', "-30": '<b>n</b>', "-31": '<b>b</b>', "-50": '<b>r</b>', "-90": '<b>q</b>', "-1000": '<b>k</b>'};
+
+		'use strict';
+
+		let icon = {
+			'0': '&nbsp;&nbsp;&nbsp;&nbsp;',
+			'10': '&#9817;', '30': '&#9816;', '31': '&#9815;', '50': '&#9814;', '90': '&#9813;', '1000': '&#9812;',
+			'-10': '&#9823;', '-30': '&#9822;', '-31': '&#9821;', '-50': '&#9820;' , '-90': '&#9819;', '-1000': '&#9818;',
+		}
+
+		// Increase font size
+		for (let i in icon) {
+			icon[i] = "<font size='+3'>" + icon[i] + "</font>";
+		}
+		return icon;
+
+	}
+
 	#init_stringify() {
 		/**
 		Stringify this.board into HTML table.
@@ -864,7 +886,7 @@ class ChessBoard {
 		'use strict';
 
 		let string = "";
-		let letter = {0: '&nbsp;', 10: 'P', 30: 'N', 31: 'B', 50: 'R', 90: 'Q', 1000: 'K', "-10": '<b>p</b>', "-30": '<b>n</b>', "-31": '<b>b</b>', "-50": '<b>r</b>', "-90": '<b>q</b>', "-1000": '<b>k</b>'};
+		let letter = this.#chess_icons();
 		let k = null;
 		for (let i = 0; i < 8; i++) {
 			string += "<tr>"
@@ -897,7 +919,7 @@ class ChessBoard {
 		Update chess board.
 		*/
 		let element = null;
-		let letter = {0: '&nbsp;', 10: 'P', 30: 'N', 31: 'B', 50: 'R', 90: 'Q', 1000: 'K', "-10": '<b>p</b>', "-30": '<b>n</b>', "-31": '<b>b</b>', "-50": '<b>r</b>', "-90": '<b>q</b>', "-1000": '<b>k</b>'};
+		let letter = this.#chess_icons();
 		for (let i = 0; i < this.board.length; i++) {
 			element = document.getElementById(i + "-chess");
 			element.innerHTML = letter[this.board[i]];
