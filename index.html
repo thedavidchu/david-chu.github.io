@@ -8,6 +8,9 @@
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
+        <!-- Custom Stylesheet -->
+        <link rel="stylesheet" href="static/stylesheet.css">
+
         <!-- Hover Dropdown Menus -->
         <style>
             @media all and (min-width: 992px) {
@@ -69,114 +72,130 @@
 
         <!-- Name Title -->
         <div id="Home" class="jumbotron fluid-container text-center">
-            <br><br>
             <h1>David Chu</h1>
-        </div>
+        </div><br>
 
         <!-- About Me -->
         <div id="About" class="container">
-            <hr>
-            <h2 class="text-center">About Me</h2>
+            <br><br>
+            <div class="card"> <!-- Separate for formatting reasons. -->
+                <div id="About-head" class="card-header">
+                    <h2 class="text-center">About Me</h2>
 
-            <p>My name is David Chu and I am in third-year Machine Intelligence Engineering at the University of Toronto. I am excited by the advances in computer vision and ML architecture.</p>
+                    <p>My name is David Chu and I am in third-year Machine Intelligence Engineering at the University of Toronto. I am excited by the advances in computer vision and ML architecture.</p>
 
-            <p>My hobbies include discovering the world on my bike, enjoying the wind and waves through sailing, and exploring music on the piano.</p>
+                    <p>My hobbies include discovering the world on my bike, enjoying the wind and waves through sailing, and exploring music on the piano.</p>
 
-            <div class="container text-center">
-                <p>Check out my <a class="text-primary" href="docs/Resume - 2020-12-16.pdf" target="_blank">Resume</a> and <a class="text-primary" href="docs/CV - 2020 Dec 11.pdf" target="_blank">CV</a></p>
+                    <div class="container text-center">
+                        <p>Check out my <a class="text-primary" href="docs/Resume - 2020-12-16.pdf" target="_blank">Resume</a> and <a class="text-primary" href="docs/CV - 2020 Dec 11.pdf" target="_blank">CV</a></p>
+                    </div>
+                </div>
+
+                <div id="About-body" class="card-body">
+                
+                    <div id="Education">
+                        <h3>Education</h3>
+                        <hr class="thin-light">
+                        <b>Bachelor of Applied Science in Engineering Science, University of Toronto (2018-2022)</b>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Specialty in Machine Intelligence Engineering, cGPA: 3.83/4.00</li>
+                            <li class="list-group-item">Strong interpersonal skills within a team environment and excellent at communicating complex ideas</li>
+                            <li class="list-group-item">Familiar with working at the intersection of math, science and engineering first principles</li>
+                        </ul><br>
+                    </div>
+
+                    <div id="Professional">
+                        <h3>Professional Experience</h3>
+                        <hr class="thin-light">
+                        <b>Regulatory Engineering Intern, Kepler Communications (Summer 2020)</b>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Full-stack development using Flask framework, SQL, HTML, and JavaScript</li>
+                            <li class="list-group-item">Designed and implemented a secure database to store and retrieve international laws and regulations. Created UI to create, view, and modify entries on dynamic webpage</li>
+                            <li class="list-group-item">Created interactive map to allow user to click on countries and view the radiofrequency emission laws relevant to the country</li>
+                            <li class="list-group-item">Researched data structures and algorithms to optimize the run-time efficiency for tracing satellite’s radiofrequency emissions along Earth’s surface</li>
+                        </ul><br>
+
+                        <b>Sailing Instructor (CANSail 3/4), The National Yacht Club (Summer 2019)</b>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Coached sailors at the pre-race level in the competitive C420 sailboat class</li>
+                            <li class="list-group-item">Provided athletic, tactical, and mental training. Acted as support person to young athletes</li>
+                        </ul><br>
+                    </div>
+
+                    <div id="Hobbies">
+                        <h3>My Hobbies</h3>
+                        <hr class="thin-light">
+                        <p>My hobbies include discovering the world on my bike, enjoying the wind and waves through sailing, and exploring music on the piano.</p>
+                        <br>
+                    </div>
+                </div>
             </div>
-            <hr>
-            
-            <div id="Education">
-                <h3>Education</h3>
-                <b>Bachelor of Applied Science in Engineering Science, University of Toronto (2018-2022)</b>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Specialty in Machine Intelligence Engineering, cGPA: 3.83/4.00</li>
-                    <li class="list-group-item">Strong interpersonal skills within a team environment and excellent at communicating complex ideas</li>
-                    <li class="list-group-item">Familiar with working at the intersection of math, science and engineering first principles</li>
-                </ul><br>
-            </div>
-            
-            <div class="divider py-1 bg-dark"><hr></div>
-            <div id="Professional">
-                <h3>Professional Experience</h3>
-                <b>Regulatory Engineering Intern, Kepler Communications (Summer 2020)</b>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Full-stack development using Flask framework, SQL, HTML, and JavaScript</li>
-                    <li class="list-group-item">Designed and implemented a secure database to store and retrieve international laws and regulations. Created UI to create, view, and modify entries on dynamic webpage</li>
-                    <li class="list-group-item">Created interactive map to allow user to click on countries and view the radiofrequency emission laws relevant to the country</li>
-                    <li class="list-group-item">Researched data structures and algorithms to optimize the run-time efficiency for tracing satellite’s radiofrequency emissions along Earth’s surface</li>
-                </ul><br>
-
-                <b>Sailing Instructor (CANSail 3/4), The National Yacht Club (Summer 2019)</b>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Coached sailors at the pre-race level in the competitive C420 sailboat class</li>
-                    <li class="list-group-item">Provided athletic, tactical, and mental training. Acted as support person to young athletes</li>
-                </ul><br>
-            </div>
-
-            <div id="Hobbies">
-                <h3>My Hobbies</h3>
-                <p>My hobbies include discovering the world on my bike, enjoying the wind and waves through sailing, and exploring music on the piano.</p>
-                <br>
-            </div>
-        </div>
+        </div><br>
 
         <!-- Portfolio -->
         <div id="Portfolio" class="container">
-            <hr>
-            <h2 class="text-center">Portfolio</h2>
-            <p>Welcome to my portfolio! You can get a sense of how I build, think, and work.</p>
-            <hr>
+            <br><br>
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="text-center">Portfolio</h2>
+                    <p>Welcome to my portfolio! You can get a sense of how I build, think, and work.</p>
+                </div>
 
-            <h3 id="Coding">Coding</h3>
-            <p>Check out my GitHub for a full list of my projects. I can code numeric computation (Python, MATLAB), full-stack development (SQL, HTML, Bootstrap, Flask), and low-level/hardware (C/C++, Verilog). A few highlights are below.</p>
+                <div class="card-body">
+                    <h3 id="Coding">Coding</h3>
+                    <hr class="thin-light">
+                    <p>Check out my GitHub for a full list of my projects. I can code numeric computation (Python, MATLAB), full-stack development (SQL, HTML, Bootstrap, Flask), and low-level/hardware (C/C++, Verilog). A few highlights are below.</p>
 
-            <b>Chess Front-End and AI (2020 December - 2021 January)</b>
-            <p>Create a virtual two-player chess game with an optional chess AI. <a href="games.html">See Games</a></p>
+                    <b>Chess Front-End and AI (2020 December - 2021 January)</b>
+                    <p>Create a virtual two-player chess game with an optional chess AI. <a href="games.html">See Games</a></p>
 
-            <b>Project Starship (2020 December)</b>
-            <p>Create a physics engine to model the flight of a starship with specific properties, such as propulsion, mass, energy conversion, and momentum transfer.</p>
+                    <b>Project Starship (2020 December)</b>
+                    <p>Create a physics engine to model the flight of a starship with specific properties, such as propulsion, mass, energy conversion, and momentum transfer.</p>
 
-            <b>CabbageJumble-aya (2020 October - 2020 December)</b>
-            <p>Coin counting AI using state-of-the-art deep learning computer vision architectures.</p>
+                    <b>CabbageJumble-aya (2020 October - 2020 December)</b>
+                    <p>Coin counting AI using state-of-the-art deep learning computer vision architectures.</p>
 
-            <b>Real-Time Target Tracker (2020 February - 2020 March)</b>
-            <p>Real-time target tracking using Classical computer vision algorithms to identify a mock electric car's charging port.</p>
+                    <b>Real-Time Target Tracker (2020 February - 2020 March)</b>
+                    <p>Real-time target tracking using Classical computer vision algorithms to identify a mock electric car's charging port.</p>
 
-            <b>Chess AI (2019 February)</b>
-            <p>Chess AI the looks 4 moves deep in a reduced subset of chess and plays the ideal move. Utilizes Alpha-Beta pruning to reduce runtime.</p>
+                    <b>Chess AI (2019 February)</b>
+                    <p>Chess AI the looks 4 moves deep in a reduced subset of chess and plays the ideal move. Utilizes Alpha-Beta pruning to reduce runtime.</p>
 
-            <h3 id="Music">Music</h3>
-            <p>Recommendations? Feel free to drop me some!</p>
+                    <h3 id="Music">Music</h3>
+                    <hr class="thin-light">
+                    <p>Recommendations? Feel free to drop me some!</p>
 
-            <h3 id="Writing">Reading and Writing</h3>
-            <p>Check out some pieces that I have written and the latest books I have read.</p>
-            <p><a href="book_review.html">Book Reviews</a></p>
+                    <h3 id="Writing">Reading and Writing</h3>
+                    <hr class="thin-light">
+                    <p>Check out some pieces that I have written and the latest books I have read.</p>
+                    <p><a href="book_review.html">Book Reviews</a></p>
 
 
 
-            <h3 id="Other">Other</h3>
-            <p>Do you have any interesting projects? Contact me if you are interested in collaboration.</p>
-            
-        </div>
+                    <h3 id="Other">Other</h3>
+                    <hr class="thin-light">
+                    <p>Do you have any interesting projects? Contact me if you are interested in collaboration.</p>
+                </div>
+            </div>
+        </div><br>
 
         <!-- Contact -->
-        <div id="Contact" class="jumbotron fluid-container" style="margin-bottom:0">
+        <div id="Contact" class="jumbotron fluid-container" style="padding-top:30px; height:100px; margin-bottom:0px">
             <div class="row">
                 <div class="col">
                     <h2>Contact</h2>
                 </div>
                 <div class="row ml-auto">
-                    <a class="col" href="to:thedavid.chu@mail.utoronto.ca" target="_blank">Email</a>
+                    <a class="col" href="mailto:thedavid.chu@mail.utoronto.ca" target="_blank">Email</a>
                     <a class="col" href="https://www.linkedin.com/in/thedavidchu/" target="_blank">LinkedIn</a>
                     <a class="col" href="https://github.com/thedavidchu/" target="_blank">GitHub</a>
                 </div>
             </div>
+
             <!-- Bottom Credits -->
             <div class="text-center align-bottom">
                 <p>Made with &#10084;&#65039; by David Chu, 2020</p>
-            </div>     
+            </div>
         </div>
 
 

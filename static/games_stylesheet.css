@@ -1,0 +1,61 @@
+/* stylesheet.css */
+
+
+/* ============================== CHESS ============================== */
+
+td {
+    max-height: 100px;
+    max-width: 100px;
+    white-space: nowrap;
+}
+
+.chess-board {
+    max-height: 800px;
+    max-width: 800px;
+    text-align: center; 
+}
+
+
+.white-square {
+    background-color: white;    /* white */
+}
+
+.black-square {
+    background-color: dimgrey;  /* dark grey */
+}
+
+.chess-moved {
+    /* border-color: #b8e8b8; */   /* light, pale green */
+    background-color: #c3e6cb;
+}
+
+.chess-passive-hover {
+    /* None */
+    /* background-color: lightgray; */
+}
+
+.chess-active-hover {
+    /* Bootstrap -info (~teal) */
+    background-color: lightcyan;    /* light, pale blue */
+}
+
+.chess-active {
+    background-color: #b7e1fc;    /* dark, pale blue */
+}
+
+.chess-legal {
+    background-color: lightyellow;  /* light, pale yellow */
+}
+
+.chess-attacked {
+    background-color: indianred;    /* light, pale red */
+}
+
+.chess-legal-hover {
+    background-color: #cefdce;  /* ligh, pale turqoise-green */
+}
+
+
+
+
+
