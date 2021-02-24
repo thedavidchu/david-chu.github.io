@@ -127,16 +127,16 @@
 
                 <p><b>Even vs. Odd Layers: </b>The AI may be more aggressive when searching an odd number of layers deep (i.e. 1, 3, or 5). This is because it does not register that the opponent will play a counter move. The AI will also sometimes get stuck alternating between moves.</p>
 
-                <p><b>Endgame: </b>The AI only looks a given number of moves ahead and it is also looking to capture the King, rather than checkmate. This means that it does not try to force a mate, rather it tries to prolong the game and capture as many enemy pieces as possible. I figure that this is not harmful enough to warrant a fix, since it is just prolonging the game until its opponents inevitable demise. Ask a real chess expert what they think about this though. The AI is unable to come up with a coherent strategy to checkmate because it never looks deep enough to explore a mate. I think the end game is different enough that it would warrant a separate engine.</p>
+                <p><b>Endgame: </b>The AI only looks a given number of moves ahead and it is also looking to capture the King, rather than checkmate. This means that it does not try to force a mate, rather it tries to prolong the game and capture as many enemy pieces as possible. I figure that this is not harmful enough to warrant a fix, since it is just prolonging the game until its opponents inevitable demise. Ask a real chess expert what they think about this though. The AI is unable to come up with a coherent strategy to checkmate because it never looks deep enough to explore a mate. I think the end game is different enough that it would warrant a separate engine. Either that, or I could hard-code endgame tables. Not my idea of fun, unfortunately. I could do iterative deepening though!</p>
             </div>
 
             <div class="container">
                 <h3>Warnings</h3>
                     <p><b>Bugs: </b>There may be bugs. If you are trying to discretely win a chess tournament, please do not use this engine unless you want to risk losing. If you find a bug, please let me know!</p>
-                    <p><b>Determinism: </b>The AI is not necessarily deterministic. I have added randomness to it; however you can switch this randomness off.</p>
+                    <p><b>Determinism: </b>The AI is not necessarily deterministic. I have added randomness to it; however you can switch this randomness off (in the source code itself).</p>
                     <p><b>Colours: </b>The colour palette doesn't quite sit right. I tried to go with pastel colours, but I have no training in UI design, so if you have any tips, please share them!</p>
-                    <p><b>Recording the Game: </b>The game is not recorded, so it is difficult to take back a move.</p>
-                    <p><b>Lesser Known Rules: </b>Neither AI nor my board have the concept of a 3-repeated-move draw nor the 50 moves without capture/ pawn move draw. So if you are looking to force a draw, good luck!</p>
+                    <p><b>Recording the Game: </b>The game is not recorded, so it is difficult to take back a move (push F12 and manually edit the board and the turn).</p>
+                    <p><b>Lesser Known Rules: </b>Neither AI nor my board have the concept of a 3-repeated-move draw nor the 50 moves without capture/ pawn move draw. So if you are looking to force a draw like this, you can't! I also have not implemented other obscure chess rules (likely because I am unaware of them).</p>
                 </ul>
             </div>
 
